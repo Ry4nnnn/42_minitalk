@@ -2,7 +2,20 @@
 
 static void ft_send_binary(int pid, char c)
 {
-	
+	int mask;
+
+	mask = 128;
+	while (mask > 0)
+	{
+		if ((c & mask) > 0)
+		{
+			kill(pid, SIGUSR1);
+		}
+		else
+			kill(pid, SIGUSR2);
+		mask >>= 1;
+		usleep(69);
+	}
 }
 
 static void ft_send_msg(int pid, char *str)
@@ -18,10 +31,10 @@ static void ft_send_msg(int pid, char *str)
 	ft_send_binary(pid, 0);
 }
 
-void	success(int sig)
+static void	ft_success(int sig)
 {
-	(void)sig;
-	write(1, "Message has been received.\n", 25);
+	if (sig == SIGUSR1)
+		write(1, "Message has been received.\n", 25);
 }
 
 int main(int argc, char **argv)
@@ -34,8 +47,7 @@ int main(int argc, char **argv)
 	{	
 		pid = ft_atoi(argv[1]);
 		str = argv[2];
-		// ft_putstr_fd("Message received!\n", 1);
-		signal(SIGUSR1, success);
+		sa.sa_handler = &ft_success;
 		sigaction(SIGUSR1, &sa, NULL);
 		sigaction(SIGUSR2, &sa, NULL);
 		ft_send_msg(pid, str);
