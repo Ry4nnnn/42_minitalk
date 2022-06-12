@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_server.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: welim <welim@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/12 11:43:43 by welim             #+#    #+#             */
+/*   Updated: 2022/06/12 11:46:50 by welim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minitalk.h"
 
 void	ft_handle_sig(int sig, siginfo_t *info, void *ucontext)
@@ -6,7 +18,7 @@ void	ft_handle_sig(int sig, siginfo_t *info, void *ucontext)
 	static char	c;
 	int			bit;
 
-	(void)*ucontext;
+	(void)ucontext;
 	if (sig == SIGUSR1)
 		bit = 1;
 	else
@@ -27,15 +39,14 @@ void	ft_handle_sig(int sig, siginfo_t *info, void *ucontext)
 	}
 }
 
-
-int main(void)
+int	main(void)
 {
 	struct sigaction	sa;
 
 	sa.sa_sigaction = &ft_handle_sig;
 	sa.sa_flags = SA_SIGINFO;
 	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);	
+	sigaction(SIGUSR2, &sa, NULL);
 	ft_putstr_fd("Server PID : ", 1);
 	ft_putnbr_fd(getpid(), 1);
 	write(1, "\n", 1);

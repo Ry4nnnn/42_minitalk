@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_client.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: welim <welim@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/12 11:43:40 by welim             #+#    #+#             */
+/*   Updated: 2022/06/12 11:45:59 by welim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minitalk.h"
 
-static void ft_send_binary(int pid, char c)
+static void	ft_send_binary(int pid, char c)
 {
-	int mask;
+	int	mask;
 
 	mask = 128;
 	while (mask > 0)
@@ -18,9 +30,9 @@ static void ft_send_binary(int pid, char c)
 	}
 }
 
-static void ft_send_msg(int pid, char *str)
+static void	ft_send_msg(int pid, char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -37,12 +49,12 @@ static void	ft_success(int sig)
 		write(1, "Message has been received.\n", 25);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	pid_t	pid;
-	char	*str;
-	struct	sigaction sa;
-	
+	pid_t				pid;
+	char				*str;
+	struct sigaction	sa;
+
 	if (argc == 3)
 	{	
 		pid = ft_atoi(argv[1]);
