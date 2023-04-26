@@ -1,5 +1,5 @@
 # minitalk
-</b> A project from 42KL. </b>
+<b/> A project from 42KL. </b>
 
 Sending messages using `Signals` (`SIGUSR1` and `SIGUSR2`)
 
